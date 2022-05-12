@@ -1,0 +1,4 @@
+**/NODE_MODULES
+**/build
+debug.log
+.env
