@@ -7,10 +7,10 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 io.on('connection', (socket: Socket) => {
+    console.log('a user connected');
     socket.on('chat message', (msg: String) => {
       console.log('message: ' + msg);
     });
-    console.log('a user connected');
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
