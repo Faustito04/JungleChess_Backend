@@ -11,8 +11,8 @@ import ioServer from "./io";
 		const app: Application = router(express());
 		const port = 8080 || process.env.PORT;
 
-		// const appPool = new ConnectionPool(config);
-		// app.locals.db = await appPool.connect();
+		const appPool = new ConnectionPool(config);
+		app.locals.db = await appPool.connect();
 
 		app.use(cors());
 		app.use(express.json());

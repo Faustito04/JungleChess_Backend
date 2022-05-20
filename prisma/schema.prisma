@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  status String @default("D") @db.Char()
+  lastConnected DateTime @default(now())
+  creationDate DateTime @default(now())
+  role String @default("U") @db.Char()
+  description String @db.NChar(600)
+  typeOfUser String @db.NChar(30)
+  service String @db.NChar(30)
+  dayStreak Int
+  friendCount Int @default(0)
+  userStat UserStat[]
+  // relationshipFirst Relationship[]
+  // relationshipSecond Relationship[]
+}
+
+// model Relationship {
+//   FirstUser User @relation(name: "relationshipFirst", fields: [firstUserId], references: [id])
+//   SecondUser User @relation(name: "relationshipSecond", fields: [secondUserId], references: [id])
+//   firstUserId Int
+//   secondUserId Int
+//   @@id([firstUserId, secondUserId])
+// }
+
+model UserStat {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int 
+}
