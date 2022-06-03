@@ -5,14 +5,13 @@ import cors from "cors";
 import router from "./utils/router";
 import config from "./utils/database";
 import ioServer from "./io";
+import { selectQuery } from "./services/createQueryService"
 
 (async () => {
 	try {
 		const app: Application = router(express());
 		const port = 8080 || process.env.PORT;
 
-		const appPool = new ConnectionPool(config);
-		app.locals.db = await appPool.connect();
 
 		app.use(cors());
 		app.use(express.json());
@@ -24,6 +23,7 @@ import ioServer from "./io";
 
 		app.listen(port, () => {
 			console.log(`Server running on http://localhost:${port}`);
+			selectQuery(["User", "UserStat", "Gamemode"], "id = 1");
 		});
 
 		ioServer.listen(port + 1, () => {

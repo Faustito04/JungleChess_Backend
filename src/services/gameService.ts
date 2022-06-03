@@ -7,7 +7,7 @@ export const getGameById = async (db: ConnectionPool, id: number): Promise<Game>
 };
 
 export const getGameByPlayerId = async (db: ConnectionPool, id: number): Promise<Game[]> => {
-    const response = await db.request().query(`SELECT * FROM [Game] WHERE Id = ${id}`);
+    const response = await db.request().execute(`getGameByPlayerId`);
     return response.recordset as Game[];
 };
 
