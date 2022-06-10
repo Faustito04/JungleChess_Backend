@@ -1,14 +1,23 @@
 import sql, { ConnectionPool } from "mssql";
 import User from "../models/user"
- 
-export const getUserAll = async (db: ConnectionPool): Promise<User[]> => {
-    const response = await db.request().query("SELECT * FROM [User]");
-    return response.recordset as User[];
+import { getCurrDate } from "../utils/date";
+
+export const getUserBy = async (db: ConnectionPool, parameterValue: string | number, parameter: string): Promise<User> => {
+    const response = await db.request().query(`SELECT * FROM [User] WHERE ${parameter} = ${parameterValue}`);
+    return response.recordset as User;
 };
 
-export const getUserById = async (db: ConnectionPool, id: number): Promise<User> => {
-    const response = await db.request().query(`SELECT * FROM [User] WHERE Id = ${id}`);
-    return response.recordset as User;
+export const getUserAll = async (
+    db: ConnectionPool, 
+    orderBy: string, 
+    rows: number = 10, 
+    page: number = 0, 
+    parameterValue?: string | number, 
+    parameter?: string
+): Promise<User[]> => {
+    const response = await db.request().query(`SELECT * FROM User ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`);
+    console.log(`SELECT * FROM User ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`)
+    return response.recordset as User[]
 };
 
 export const createUser = async (
@@ -20,7 +29,7 @@ export const createUser = async (
         .input("name", sql.VarChar(30), user.name)
         .input("status", sql.Char, "D")
         .input("imageUrl", sql.VarChar(500), user.imageUrl)
-        //.input("creationDate", sql.Int, getCurrentDate())
+        .input("creationDate", sql.Int, getCurrDate())
         .input("role", sql.Char, user.role)
         .input("description", sql.VarChar(600), user.description)
         .input("typeOfUser", sql.VarChar(30), user.typeOfUser)
@@ -31,9 +40,9 @@ export const createUser = async (
     return response.rowsAffected[0];
 };
 
-export const deleteUserById = async (
+export const deleteUserByName = async (
     db: ConnectionPool,
-    id: number
+    id: string
 ): Promise<number> => {
     const response = await db
         .request()

@@ -7,7 +7,7 @@ const connectionsId = ["gamemodeId", "gamemodeId", "userId",
 "gameId-user1_user2", "userId-suspendedId_suspenderId", 
 "userId", "gameId", "gameId"];
 
-const createInnerJoin = (tables: string[], table: number) => {
+const createInnerJoin1 = (tables: string[], table: number) => {
     let table1 = tables[table];
     let table2 = tables[table+1];
     let relation = "";
@@ -38,10 +38,14 @@ const createInnerJoin = (tables: string[], table: number) => {
 export const selectQuery = async (tables: string[], condition: string, parameters: string = "*") => {
     let cantTables = tables.length;
     let innerJoin = "";
+
+    if (new Set(tables).size !== tables.length) {
+        tables.pop()
+    } 
     
     let times = 0;
     while (cantTables > 1) {
-        innerJoin += createInnerJoin(tables, times);
+        innerJoin += createInnerJoin1(tables, times);
         times++;
         cantTables--;
     }
