@@ -22,7 +22,7 @@ export const getUserAllPro = async (
 export const getUserAll = async (db: ConnectionPool): Promise<User[]> => {
     const response = await db
         .request()
-        .execute("SELECT * FROM User");
+        .query("SELECT * FROM [User]");
     return response.recordset as User[];
 };
 
