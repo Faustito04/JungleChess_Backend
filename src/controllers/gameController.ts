@@ -37,11 +37,9 @@ router.post("/", async (req, res) => {
 
         const rowsAffected: number = await createGame(req.app?.locals.db, game);
 
-        ids.forEach((id: number) => {
-            createGameXUser(req.app?.locals.db, id, game.id);
-        });
-
-        const rowsAffected2: number = await createGame(req.app?.locals.db, game);
+        const promises = ids.map((id: number) => async () => await createGameXUser(req.app?.locals.db, id, game.id))
+ 
+        await Promise.all(promises);
         
         res.status(200).send(rowsAffected);
     } catch (err) {

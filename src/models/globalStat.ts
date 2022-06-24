@@ -1,5 +1,5 @@
 export default class globalStat {
-    gamemodeID?: number
+    gamemodeId?: number
 	name?: string
 	value?: number
 }

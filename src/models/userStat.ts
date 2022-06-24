@@ -1,6 +1,6 @@
 export default class UserStat {
-    userID?: number
-	gamemodeID?: number
+    userId?: number
+	gamemodeId?: number
 	name?: string
 	value?: number
 }

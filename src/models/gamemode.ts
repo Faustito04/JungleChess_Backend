@@ -1,5 +1,5 @@
 export default class Gamemode {
-	gamemodeID?: number
+	gamemodeId?: number
 	name?: string
 	playersPerGame?: number
 }

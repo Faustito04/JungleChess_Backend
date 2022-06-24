@@ -1,5 +1,5 @@
 export default class GameXUser {
-    gameID?: number
-	userID?: number
+    gameId?: number
+	userId?: number
 	role?: string
 }

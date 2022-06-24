@@ -1,6 +1,6 @@
 export default class Suspension {
-    suspendedID?: number
-	suspenderID?: number
+    suspendedId?: number
+	suspenderId?: number
 	suspensionDate?: Date
 	unsuspendDate?: Date
 	reason?: string

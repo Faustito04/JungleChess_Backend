@@ -1,5 +1,5 @@
 export default class Move {
-    gameID?: number
+    gameId?: number
 	turn?: number
 	move?: string
 	piece?: string
