@@ -20,7 +20,6 @@ export const getUserBy = async (db: ConnectionPool, parameterValue: string | num
 // };
 
 export const getUserAll = async (db: ConnectionPool): Promise<User[]> => {
-    console.log("service")
     const response = await db
         .request()
         .execute("getAll");

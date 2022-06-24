@@ -1,23 +1,15 @@
 import express, { Application } from "express";
 import { ConnectionPool } from "mssql";
 import bodyParser from "body-parser";
-import cors from "cors";
 import router from "./utils/router";
 import config from "./utils/database";
 import ioServer from "./io";
-import { selectQuery } from "./services/createQueryService"
 
 (async () => {
 	try {
 		const app: Application = router(express());
 		const port = 8080 || process.env.PORT;
 
-		const corsOptions = {
-			origin: '*',
-			optionsSuccessStatus: 200
-		}
-
-		app.use(cors(corsOptions));
 		app.use(express.json());
 		app.use(bodyParser.json());
 

@@ -8,7 +8,6 @@ const jsonParser = bodyParser.json();
 
 router.get("/all", async (req, res) => {
     try {
-        console.log("holala")
         const personajes: User[] = await getUserAll(req.app?.locals.db);
         res.status(200).json(personajes);
     } catch (err) {
