@@ -2,6 +2,7 @@ import { Router } from "express";
 import bodyParser from "body-parser";
 import Game from "../models/Game";
 import { createGame, getGameAndMoves, getGameByPlayerId } from "../services/gameService";
+import { createGameXUser } from "../services/gameXUserService";
  
 const router = Router();
 const jsonParser = bodyParser.json();
@@ -28,7 +29,20 @@ router.get("/all/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const rowsAffected: number = await createGame(req.app?.locals.db);
+        let game = {
+            id: "",//uuid
+            date: req.body.date
+        }
+        let ids = req.body.userIds
+
+        const rowsAffected: number = await createGame(req.app?.locals.db, game);
+
+        ids.forEach((id: number) => {
+            createGameXUser(req.app?.locals.db, id, game.id);
+        });
+
+        const rowsAffected2: number = await createGame(req.app?.locals.db, game);
+        
         res.status(200).send(rowsAffected);
     } catch (err) {
         console.log(err);

@@ -17,7 +17,7 @@ export const getGameAndMoves = async (db: ConnectionPool, id: number): Promise<G
     return {...game.recordset, moves: moves.recordset} as Game;
 };
 
-export const createGame = async (db: ConnectionPool): Promise<number> => {
-    const response = await db.request().query(`createGame`);
+export const createGame = async (db: ConnectionPool, game: Game ): Promise<number> => {
+    const response = await db.request().input("gameId", sql.Int, game.gameId).input("date", sql.Int, game.date).query(`createGame`);
     return response.rowsAffected[0];
 };
