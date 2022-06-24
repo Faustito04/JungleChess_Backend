@@ -1,6 +1,9 @@
+import Move from "./move"
+
 export default class Game {
-    gameID?: number
+    gameId?: number
 	viewCount?: number
 	status?: boolean
 	date?: Date
+	moves?: Move[]
 }
