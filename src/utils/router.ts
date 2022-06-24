@@ -1,10 +1,12 @@
 import { Application } from "express";
 import { readdirSync } from "fs";
 import { join } from "path";
+import cors from "cors";
 
 const controllerFolder = join(__dirname, "..", "controllers");
 
 const router = (app: Application): Application => {
+	app.use(cors());
 	readdirSync(controllerFolder).forEach((file: string) => {
 		if (!/Controller/.test(file)) return;
 		app.use(
