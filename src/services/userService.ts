@@ -7,17 +7,24 @@ export const getUserBy = async (db: ConnectionPool, parameterValue: string | num
     return response.recordset as User;
 };
 
-export const getUserAll = async (
-    db: ConnectionPool, 
-    orderBy: string, 
-    rows: number = 10, 
-    page: number = 0, 
-    parameterValue?: string | number, 
-    parameter?: string
-): Promise<User[]> => {
-    const response = await db.request().query(`SELECT * FROM User ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`);
-    console.log(`SELECT * FROM User ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`)
-    return response.recordset as User[]
+// export const getUserAll = async (
+//     db: ConnectionPool, 
+//     orderBy: string, 
+//     rows: number = 10, 
+//     page: number = 0, 
+//     parameterValue?: string | number, 
+//     parameter?: string
+// ): Promise<User[]> => {
+//     const response = await db.request().query(`SELECT * FROM User ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`);
+//     return response.recordset as User[]
+// };
+
+export const getUserAll = async (db: ConnectionPool): Promise<User[]> => {
+    console.log("service")
+    const response = await db
+        .request()
+        .execute("getAll");
+    return response.recordset as User[];
 };
 
 export const createUser = async (

@@ -12,10 +12,17 @@ import { selectQuery } from "./services/createQueryService"
 		const app: Application = router(express());
 		const port = 8080 || process.env.PORT;
 
+		const corsOptions = {
+			origin: '*',
+			optionsSuccessStatus: 200
+		}
 
-		app.use(cors());
+		app.use(cors(corsOptions));
 		app.use(express.json());
 		app.use(bodyParser.json());
+
+		const appPool = new ConnectionPool(config);
+		app.locals.db = await appPool.connect();
 
 		app.get("*", (_, res) => {
 			res.sendFile(__dirname + '/index.html');
@@ -23,7 +30,6 @@ import { selectQuery } from "./services/createQueryService"
 
 		app.listen(port, () => {
 			console.log(`Server running on http://localhost:${port}`);
-			selectQuery(["User", "UserStat", "Gamemode"], "id = 1");
 		});
 
 		ioServer.listen(port + 1, () => {
