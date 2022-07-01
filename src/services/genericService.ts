@@ -9,7 +9,7 @@ export const getAllLike = async (
     parameterValue?: string | number, 
     parameter?: string
 ): Promise<any> => {
-    const response = await db.request().query(`SELECT * FROM ${table} ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`);
+    const response = await db.request().query(`SELECT * FROM ${table} ${parameterValue ? "WHERE " + parameter + " LIKE %" + parameterValue + "%" : ""} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`);
     console.log(`SELECT * FROM ${table} ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`)
     return response.recordset
 };
@@ -23,7 +23,7 @@ export const getAllBy = async (
     parameterValue?: string | number, 
     parameter?: string
 ): Promise<any> => {
-    const response = await db.request().query(`SELECT * FROM ${table} ${parameterValue ?? "WHERE " + parameter + " LIKE %" + parameterValue + "%"} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`);
+    const response = await db.request().query(`SELECT * FROM ${table} ${parameterValue ? "WHERE " + parameter + " LIKE %" + parameterValue + "%" : ""} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`);
     console.log(`SELECT * FROM ${table} ${parameterValue ?? "WHERE " + parameter + "  = " + parameterValue} ORDER BY ${orderBy} OFFSET ${rows * (page + 1)} ROWS FETCH NEXT ${rows} ROWS ONLY`)
     return response.recordset
 };

@@ -3,7 +3,7 @@ import User from "../models/user"
 import { getCurrDate } from "../utils/date";
 
 export const getUserBy = async (db: ConnectionPool, parameter: string, parameterValue: string | number): Promise<User> => {
-    const response = await db.request().query(`SELECT * FROM [User] WHERE ${parameter} = ${parameterValue}`);
+    const response = await db.request().query(`SELECT * FROM [User] WHERE ${parameter} = '${parameterValue}'`);
     return response.recordset as User;
 };
 
