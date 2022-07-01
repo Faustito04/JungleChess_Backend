@@ -7,7 +7,6 @@ export default class User {
   creationDate?: string 
   role?: string
   description?: string
-  typeOfUser?: string
   service?: string
   dayStreak?: number
   friendCount?: number

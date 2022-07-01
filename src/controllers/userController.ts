@@ -6,7 +6,7 @@ import { createUser, deleteUserByName, getUserAll, getUserBy } from "../services
 const router = Router();
 const jsonParser = bodyParser.json();
 
-router.get("/all", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const personajes: User[] = await getUserAll(req.app?.locals.db);
         res.status(200).json(personajes);
@@ -26,10 +26,10 @@ router.get("/:name", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", jsonParser, async (req, res) => {
     try {
-        const rowsAffected: number = await createUser(req.app?.locals.db, req.body.user);
-        res.status(200).send(rowsAffected);
+        const rowsAffected: number = await createUser(req.app?.locals.db, req.body);
+        res.status(200).json(rowsAffected);
     } catch (err) {
         console.log(err);
         res.status(500).send("error");

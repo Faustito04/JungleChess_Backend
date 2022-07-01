@@ -7,7 +7,7 @@ export const getUserBy = async (db: ConnectionPool, parameterValue: string | num
     return response.recordset as User;
 };
 
-export const getUserAllPro = async (
+export const getUserAllPaginado = async (
     db: ConnectionPool, 
     orderBy: string, 
     rows: number = 10, 
@@ -24,7 +24,7 @@ export const getUserAll = async (db: ConnectionPool): Promise<User[]> => {
         .request()
         .query("SELECT * FROM [User]");
     return response.recordset as User[];
-};
+};//sobra
 
 export const createUser = async (
     db: ConnectionPool,
@@ -33,15 +33,9 @@ export const createUser = async (
     const response = await db
         .request()
         .input("name", sql.VarChar(30), user.name)
-        .input("status", sql.Char, "D")
         .input("imageUrl", sql.VarChar(500), user.imageUrl)
-        .input("creationDate", sql.Int, getCurrDate())
-        .input("role", sql.Char, user.role)
         .input("description", sql.VarChar(600), user.description)
-        .input("typeOfUser", sql.VarChar(30), user.typeOfUser)
         .input("service", sql.VarChar(30), user.service)
-        .input("dayStreak", sql.Int, 1)
-        .input("friendCount", sql.Int, 0)
         .execute(`createUser`);
     return response.rowsAffected[0];
 };
