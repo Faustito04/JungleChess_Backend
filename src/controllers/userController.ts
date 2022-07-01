@@ -8,8 +8,9 @@ const jsonParser = bodyParser.json();
 
 router.get("/", async (req, res) => {
     try {
-        const personajes: User[] = await getUserAll(req.app?.locals.db);
-        res.status(200).json(personajes);
+        const user: User[] = await getUserAll(req.app?.locals.db);
+        console.log(user);
+        res.status(200).json(user);
     } catch (err) {
         console.log(err);
         res.status(500).send("error");
@@ -18,8 +19,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:name", async (req, res) => {
     try {
-        const personaje: User = await getUserBy(req.app?.locals.db, "name", req.params.name);
-        res.status(200).json(personaje);
+        const user: User = await getUserBy(req.app?.locals.db, "name", req.params.name);
+        res.status(200).json(user);
     } catch (err) {
         console.log(err);
         res.status(500).send("error");
