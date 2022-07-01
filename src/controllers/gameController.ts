@@ -3,11 +3,12 @@ import bodyParser from "body-parser";
 import Game from "../models/Game";
 import { createGame, getGameAndMoves, getGameByPlayerId } from "../services/gameService";
 import { createGameXUser } from "../services/gameXUserService";
+import { v4 as uuidv4 } from 'uuid';
  
 const router = Router();
 const jsonParser = bodyParser.json();
 
-router.get("/all/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
         const games: Game[] = await getGameByPlayerId(req.app?.locals.db, parseInt(req.params.id));
         res.status(200).json(games);
@@ -17,7 +18,7 @@ router.get("/all/:id", async (req, res) => {
     }
 });
 
-router.get("/all/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
         const game: Game = await getGameAndMoves(req.app?.locals.db, parseInt(req.params.id));
         res.status(200).json(game);
@@ -29,15 +30,12 @@ router.get("/all/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let game = {
-            id: "",//uuid
-            date: req.body.date
-        }
-        let ids = req.body.userIds
+        let gameId = uuidv4()
+        let userIds = req.body.userIds
 
-        const rowsAffected: number = await createGame(req.app?.locals.db, game);
+        const rowsAffected: number = await createGame(req.app?.locals.db, parseInt(gameId));
 
-        const promises = ids.map((id: number) => async () => await createGameXUser(req.app?.locals.db, id, game.id))
+        const promises = userIds.map((id: number) => async () => await createGameXUser(req.app?.locals.db, id, gameId))
  
         await Promise.all(promises);
         
