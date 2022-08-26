@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bodyParser from "body-parser";
 import User from "../models/user";
-import { createUser, deleteUserByName, getUserAll } from "../services/userService";
+import { createUser, getUserAll } from "../services/userService";
 import { deleteBy, getBy } from "../services/genericService";
  
 const router = Router();

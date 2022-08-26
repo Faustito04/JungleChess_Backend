@@ -5,5 +5,4 @@ export default class UserGlobalStats {
     gamesLost?: number
     gamesTied?: number
     hoursPlayed?: number
-    creationDate?: string
 }

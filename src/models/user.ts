@@ -4,10 +4,11 @@ export default class User {
   status?: string
   imageUrl?: string
   lastConnected?: string
-  creationDate?: string 
+  creationDate?: Date 
   role?: string
   description?: string
   service?: string
   dayStreak?: number
   friendCount?: number
+  birthDate?: Date
 }
