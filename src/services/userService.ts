@@ -1,6 +1,5 @@
 import sql, { ConnectionPool } from "mssql";
 import User from "../models/user"
-import { getCurrDate } from "../utils/date";
 
 export const getUserAllPaginado = async (
     db: ConnectionPool, 
