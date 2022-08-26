@@ -28,7 +28,8 @@ export const getAllBy = async (
     return response.recordset
 };
 
-export const getBy = async (db: ConnectionPool, table: string, value: number | string, parameter: string): Promise<any> => {
+export const getBy = async (db: ConnectionPool, table: string, parameter: string, value: number | string): Promise<any> => {
+    console.log(`SELECT * FROM ${table} WHERE ${parameter} = ${value}`)
     const response = await db.request().query(`SELECT * FROM ${table} WHERE ${parameter} = ${value}`);
     return response.recordset;
 };

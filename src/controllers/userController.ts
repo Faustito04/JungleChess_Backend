@@ -10,7 +10,6 @@ const jsonParser = bodyParser.json();
 router.get("/", async (req, res) => {
     try {
         const user: User[] = await getUserAll(req.app?.locals.db);
-        console.log(user);
         res.status(200).json(user);
     } catch (err) {
         console.log(err);
@@ -20,6 +19,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:name", async (req, res) => {
     try {
+        console.log("buens tardes")
+        console.log(req.params.name)
         const user: User = await getBy(req.app?.locals.db, "User", "name", req.params.name);
         res.status(200).json(user);
     } catch (err) {
@@ -38,9 +39,9 @@ router.post("/", jsonParser, async (req, res) => {
     }
 });
 
-router.delete("/:name", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
-        const rowsAffected: number = await deleteBy(req.app?.locals.db, "User", "id", req.params.name);
+        const rowsAffected: number = await deleteBy(req.app?.locals.db, "User", "id", req.params.id);
         res.status(200).send(rowsAffected);
     } catch (err) {
         console.log(err);

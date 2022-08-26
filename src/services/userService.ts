@@ -30,6 +30,7 @@ export const createUser = async (
         .input("imageUrl", sql.VarChar(500), user.imageUrl)
         .input("description", sql.VarChar(600), user.description)
         .input("service", sql.VarChar(30), user.service)
+        .input("birthDate", sql.Date, user.birthDate)
         .execute(`createUser`);
     return response.rowsAffected[0];
 };
