@@ -1,15 +1,15 @@
 import { Router } from "express";
 import bodyParser from "body-parser";
 import User from "../models/user";
-import { createUser, getUserAll } from "../services/userService";
-import { deleteBy, getBy } from "../services/genericService";
+import { createUser} from "../services/userService";
+import { deleteBy, getAll, getBy } from "../services/genericService";
  
 const router = Router();
 const jsonParser = bodyParser.json();
 
 router.get("/", async (req, res) => {
     try {
-        const user: User[] = await getUserAll(req.app?.locals.db);
+        const user: User[] = await getAll(req.app?.locals.db, "User");
         res.status(200).json(user);
     } catch (err) {
         console.log(err);
@@ -19,9 +19,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:name", async (req, res) => {
     try {
-        console.log("buens tardes")
         console.log(req.params.name)
-        const user: User = await getBy(req.app?.locals.db, "User", "name", req.params.name);
+        const user: User = await getBy(req.app?.locals.db, "[User]", "name", req.params.name);
         res.status(200).json(user);
     } catch (err) {
         console.log(err);
@@ -41,7 +40,7 @@ router.post("/", jsonParser, async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
-        const rowsAffected: number = await deleteBy(req.app?.locals.db, "User", "id", req.params.id);
+        const rowsAffected: number = await deleteBy(req.app?.locals.db, "[User]", "name", req.params.id);//cambiar
         res.status(200).send(rowsAffected);
     } catch (err) {
         console.log(err);
